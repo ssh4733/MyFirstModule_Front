@@ -1,0 +1,176 @@
+.postlist-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-bottom: 3%;
+}
+
+/* 제목 + 버튼 라인 */
+.section-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.section-header {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.section-actions {
+  display: inline-flex;
+  gap: 10px;
+}
+
+/* 테이블 전체 */
+.postlist-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* 테이블 헤더 */
+.postlist-table thead {
+  background-color: #ecf0f1;
+}
+
+/* 셀 공통 스타일 */
+.postlist-table th,
+.postlist-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+/* 정렬 */
+.col-no,
+.col-writer,
+.col-date {
+  text-align: center;
+}
+
+.col-title,
+.col-content {
+  text-align: left;
+}
+
+/* 각 컬럼 비율 (1 : 3 : 6 : 1.5 : 2 : 2) */
+.col-no {
+  width: 3%;
+}
+
+.col-title {
+  width: 15%;
+}
+
+.col-content {
+  width: 30%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.col-writer {
+  width: 7.5%;
+}
+
+.col-date {
+  width: 10%;
+}
+
+/* 마우스 오버 효과 */
+.postlist-table tbody tr:hover {
+  background-color: #f9fbfc;
+}
+
+/* 빈 줄 / 에러 메시지 */
+.empty-row {
+  text-align: center;
+  color: #e74c3c;
+  font-weight: 500;
+  padding: 40px 0;
+  font-size: 15px;
+}
+
+/* 페이징 영역 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+}
+
+.page-btn {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page-btn:hover {
+  background-color: #f1f1f1;
+}
+
+.page-btn.active {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+/* 수정/삭제 버튼 스타일 */
+.table-btn {
+  padding: 8px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+/* 수정 - 파란색 */
+.table-btn.edit {
+  background-color: #3498db;
+}
+.table-btn.edit:hover {
+  background-color: #2980b9;
+}
+
+/* 삭제 - 빨간색 */
+.table-btn.delete {
+  background-color: #e74c3c;
+}
+.table-btn.delete:hover {
+  background-color: #c0392b;
+}
+
+/* 정렬 */
+.col-no,
+.col-writer,
+.col-date {
+  text-align: center;
+}
+
+.col-title,
+.col-content {
+  text-align: left;
+}
+
+.col-check {
+  width: 1%;
+  text-align: center;
+}
