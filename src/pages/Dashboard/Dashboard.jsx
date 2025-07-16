@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
 import './Dashboard.css';
 
 function Dashboard() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -14,10 +16,10 @@ function Dashboard() {
       navigate('/login');
       return;
     }
-    
+
     try {
-    const decoded = jwtDecode(token);
-    setUsername(decoded.sub || '알 수 없음');
+      const decoded = jwtDecode(token);
+      setUsername(decoded.sub || '알 수 없음');
     } catch (err) {
       console.error('JWT 디코딩 오류:', err);
       alert('토큰이 유효하지 않습니다. 다시 로그인해주세요.');
@@ -38,6 +40,29 @@ function Dashboard() {
     alert('추후 업데이트 예정입니다.');
   };
 
+  const handleSubmitPost = async (title, content) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.post("/api/posts", {
+          title, content
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      alert("글이 등록되었습니다.");
+      setShowModal(false);
+    } catch (error) {
+      console.error("글 등록 중 오류:", error);
+      alert("등록 실패: " + (error.response?.data || error.message));
+    }
+  };
+
   return (
     <div className="dashboard-layout">
       <header className="dashboard-header">
@@ -52,7 +77,7 @@ function Dashboard() {
         <div className="main-content">
           <h2 className="main-title">DashBoard</h2>
           <p className="main-desc">추후 리팩토링 단계를 통해 업로드 예정</p>
-          
+
           <div className="quick-actions">
             <div className="action-card">
               <h3>📄 게시글 관리</h3>
@@ -65,7 +90,7 @@ function Dashboard() {
             <div className="action-card">
               <h3>✍️ 새 글 작성</h3>
               <p>새로운 게시글을 작성할 수 있습니다.</p>
-              <button className="action-btn primary" onClick={() => navigate('/posts/new')}>
+              <button className="action-btn primary" onClick={() => setShowModal(true)}>
                 새 글 작성하기
               </button>
             </div>
@@ -110,6 +135,33 @@ function Dashboard() {
       <footer className="dashboard-footer">
         © 2025 MyFirstModule. All rights reserved.
       </footer>
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3 className="modal-title">새 글 작성</h3>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              const title = e.target.title.value;
+              const content = e.target.content.value;
+              handleSubmitPost(title, content);
+            }} className="modal-form">
+              <label>
+                제목
+                <input type="text" name="title" required placeholder="제목을 입력하세요" />
+              </label>
+              <label>
+                내용
+                <textarea name="content" required placeholder="내용을 입력하세요" />
+              </label>
+              <div className="form-buttons">
+                <button type="submit" className="action-btn primary">등록</button>
+                <button type="button" className="action-btn secondary" onClick={() => setShowModal(false)}>취소</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
